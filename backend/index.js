@@ -9,8 +9,14 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// CORS Configuration
+const corsOptions = {
+  origin: 'https://ashokaroomtradingsite.netlify.app',
+  optionsSuccessStatus: 200 // For legacy browser support
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions)); // Use specific CORS configuration
 app.use(bodyParser.json());
 
 // Use API Routes
