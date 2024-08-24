@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import TradeForm from './TradeForm';
-
+import "./App.css"
 function App() {
   const [user, setUser] = useState(null);
   const [trades, setTrades] = useState([]);
@@ -25,6 +25,11 @@ function App() {
           <TradeForm user={user} trades={trades} setTrades={setTrades} />
         </div>
       )}
+      <footer className="footer">
+        Made with 🤍 by Zahaan Shapoorjee
+        <br />
+        Contact +91 9953462055 for any bugs.
+      </footer>
     </div>
   );
 }
