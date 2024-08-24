@@ -15,7 +15,7 @@ const TradeForm = ({ user, trades, setTrades }) => {
 
   useEffect(() => {
     // Fetch all trades initially to check for matches
-    fetch('http://localhost:5000/api/trades')
+    fetch('https://ashoka-room-trading-site.onrender.com/api/trades')
       .then(res => res.json())
       .then(data => setTrades(data))
       .catch(err => console.error('Error fetching trades:', err));
@@ -49,7 +49,7 @@ const TradeForm = ({ user, trades, setTrades }) => {
     };
 
     try {
-      const res = await fetch('http://localhost:5000/api/trade', {
+      const res = await fetch('https://ashoka-room-trading-site.onrender.com/api/trade', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const TradeForm = ({ user, trades, setTrades }) => {
 
   const handleToggleLive = async (id, currentLiveStatus) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/trade/${id}`, {
+      const res = await fetch(`https://ashoka-room-trading-site.onrender.com/api/trade/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const TradeForm = ({ user, trades, setTrades }) => {
       }
 
       // Fetch updated trades to refresh the UI
-      const updatedTrades = await fetch('http://localhost:5000/api/trades')
+      const updatedTrades = await fetch('https://ashoka-room-trading-site.onrender.com/api/trades')
         .then(res => res.json());
       setTrades(updatedTrades);
     } catch (err) {
@@ -99,7 +99,7 @@ const TradeForm = ({ user, trades, setTrades }) => {
 
   const handlePhoneNumberChange = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/user/phone', {
+      const res = await fetch('https://ashoka-room-trading-site.onrender.com/api/user/phone', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -37,7 +37,7 @@ const Login = ({ setUser }) => {
     const completeUserData = { ...userData, phoneNumber };
 
     try {
-      const res = await fetch('http://localhost:5000/api/user', {
+      const res = await fetch('https://ashoka-room-trading-site.onrender.com/api/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
