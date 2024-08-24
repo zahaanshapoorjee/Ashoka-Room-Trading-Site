@@ -63,10 +63,11 @@ const Login = ({ setUser }) => {
   };
 
   return (
+    <div className='login-page'>
     <div className="login">
       {!userData ? (
         <div className="login__container">
-          <h2>Login with Google</h2>
+          <h2>Login with Ashoka ID</h2>
           <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
         </div>
       ) : (
@@ -81,6 +82,7 @@ const Login = ({ setUser }) => {
           <button onClick={handleSubmitPhoneNumber} className="login__button">Submit Phone Number</button>
         </div>
       )}
+    </div>
     </div>
   );
 };
