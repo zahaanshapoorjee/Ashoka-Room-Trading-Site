@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import TradeForm from './TradeForm';
-import "./App.css"
+import "./App.css";
+
 function App() {
   const [user, setUser] = useState(null);
   const [trades, setTrades] = useState([]);
@@ -22,7 +23,7 @@ function App() {
       ) : (
         <div>
           <h1>Welcome, {user.name} ({user.batch.toUpperCase()})</h1>
-          <TradeForm user={user} trades={trades} setTrades={setTrades} />
+          <TradeForm user={user} trades={trades} setTrades={setTrades} setUser={setUser} />
         </div>
       )}
       <footer className="footer">

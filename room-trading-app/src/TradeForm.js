@@ -1,8 +1,16 @@
 // src/TradeForm.js
+
 import React, { useState, useEffect } from 'react';
 import './TradeForm.css'; // Import CSS for styling
 
-const TradeForm = ({ user, trades, setTrades }) => {
+const handleUnauthorized = (setUser) => {
+  alert('Your session has expired. Please log in again.');
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  setUser(null);
+};
+
+const TradeForm = ({ user, trades, setTrades, setUser }) => {
   const [requestFloor, setRequestFloor] = useState('');
   const [requestRH, setRequestRH] = useState('');
   const [offerFloor, setOfferFloor] = useState('');
@@ -15,11 +23,21 @@ const TradeForm = ({ user, trades, setTrades }) => {
 
   useEffect(() => {
     // Fetch all trades initially to check for matches
-    fetch('https://ashoka-room-trading-site.onrender.com/api/trades')
-      .then(res => res.json())
+    fetch('https://ashoka-room-trading-site.onrender.com/api/trades', {
+      headers: {
+        'x-auth-token': token,
+      },
+    })
+      .then(res => {
+        if (res.status === 401) {
+          handleUnauthorized(setUser);
+          return Promise.reject('Unauthorized');
+        }
+        return res.json();
+      })
       .then(data => setTrades(data))
       .catch(err => console.error('Error fetching trades:', err));
-  }, [setTrades]);
+  }, [setTrades, setUser, token]);
 
   useEffect(() => {
     // Ensure only live matching trades are displayed
@@ -58,6 +76,11 @@ const TradeForm = ({ user, trades, setTrades }) => {
         body: JSON.stringify(newTrade),
       });
 
+      if (res.status === 401) {
+        handleUnauthorized(setUser);
+        return;
+      }
+
       if (!res.ok) {
         throw new Error('Failed to create trade request');
       }
@@ -84,13 +107,28 @@ const TradeForm = ({ user, trades, setTrades }) => {
         body: JSON.stringify({ live: !currentLiveStatus }), // Toggle based on current status
       });
 
+      if (res.status === 401) {
+        handleUnauthorized(setUser);
+        return;
+      }
+
       if (!res.ok) {
         throw new Error('Failed to update trade request');
       }
 
       // Fetch updated trades to refresh the UI
-      const updatedTrades = await fetch('https://ashoka-room-trading-site.onrender.com/api/trades')
-        .then(res => res.json());
+      const updatedTrades = await fetch('https://ashoka-room-trading-site.onrender.com/api/trades', {
+        headers: {
+          'x-auth-token': token,
+        },
+      })
+        .then(res => {
+          if (res.status === 401) {
+            handleUnauthorized(setUser);
+            return Promise.reject('Unauthorized');
+          }
+          return res.json();
+        });
       setTrades(updatedTrades);
     } catch (err) {
       console.error('Error updating trade request:', err);
@@ -107,6 +145,11 @@ const TradeForm = ({ user, trades, setTrades }) => {
         },
         body: JSON.stringify({ phoneNumber }),
       });
+
+      if (res.status === 401) {
+        handleUnauthorized(setUser);
+        return;
+      }
 
       if (!res.ok) {
         throw new Error('Failed to update phone number');
