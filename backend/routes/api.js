@@ -33,7 +33,7 @@ router.post('/user', async (req, res) => {
     jwt.sign(
       payload,
       "mySuperSecretJWTKey123!@#",
-      { expiresIn: 3600 }, // Token expires in 1 hour
+      { expiresIn: '30d' }, // Token expires in 30 days (1 month)
       (err, token) => {
         if (err) throw err;
         res.json({ token });
