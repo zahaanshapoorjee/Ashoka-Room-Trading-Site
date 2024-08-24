@@ -1,5 +1,3 @@
-// src/TradeForm.js
-
 import React, { useState, useEffect } from 'react';
 import './TradeForm.css'; // Import CSS for styling
 
@@ -163,49 +161,75 @@ const TradeForm = ({ user, trades, setTrades, setUser }) => {
     }
   };
 
+  // Function to generate dropdown options
+  const generateOptions = () => {
+    const options = [];
+    for (let i = 1; i <= 10; i++) {
+      options.push(
+        <option key={i} value={i.toString()}>
+          {i}
+        </option>
+      );
+    }
+    options.push(
+      <option key="any" value="Any">
+        Any
+      </option>
+    );
+    return options;
+  };
+
   return (
     <div className="trade-form">
       <form onSubmit={handleSubmit} className="trade-form__form">
         <h2>Create a Trade Request</h2>
         <label>
           Request Floor:
-          <input
-            type="text"
+          <select
             value={requestFloor}
             onChange={(e) => setRequestFloor(e.target.value)}
             required
             className="trade-form__input" // Uniform input styling
-          />
+          >
+            <option value="" disabled>Select Floor</option>
+            {generateOptions()}
+          </select>
         </label>
         <label>
           Request RH:
-          <input
-            type="text"
+          <select
             value={requestRH}
             onChange={(e) => setRequestRH(e.target.value)}
             required
             className="trade-form__input" // Uniform input styling
-          />
+          >
+            <option value="" disabled>Select RH</option>
+            {generateOptions()}
+          </select>
         </label>
         <label>
           Offer Floor:
-          <input
-            type="text"
+          <select
             value={offerFloor}
             onChange={(e) => setOfferFloor(e.target.value)}
             required
             className="trade-form__input" // Uniform input styling
-          />
+          >
+            <option value="" disabled>Select Floor</option>
+            {generateOptions()}
+          </select>
         </label>
         <label>
           Offer RH:
-          <input
-            type="text"
+          <select
             value={offerRH}
             onChange={(e) => setOfferRH(e.target.value)}
             required
             className="trade-form__input" // Uniform input styling
-          />
+          >
+            <option value="" disabled>Select RH</option>
+            {generateOptions()}
+          </select>
         </label>
         <button type="submit" className="trade-form__button">Submit Trade Request</button>
       </form>
